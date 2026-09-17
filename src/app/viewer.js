@@ -36,6 +36,10 @@ export function createApplicationViewer({ container, creditContainer }) {
   try {
     viewer.targetFrameRate = 60;
     viewer.scene.globe.show = false;
+    // Ground atmosphere (baked into the globe surface shader) hits the same
+    // ANGLE/Metal bug as sky atmosphere below, once real basemap tiles make
+    // the globe visible again elsewhere in the app.
+    viewer.scene.globe.showGroundAtmosphere = !isSafariBrowser();
     viewer.scene.skyAtmosphere.show = !isSafariBrowser();
     viewer.scene.skyAtmosphere.atmosphereLightIntensity = 18;
     viewer.scene.skyAtmosphere.saturationShift = -0.12;
